@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Protein Viewer</title>
+    <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
+</head>
+<body>
+    <h1>Protein Activity Prediction Visualization</h1>
+    <div>
+        <h2>Input JSON with coordinates and activities</h2>
+        <input id="file" type="file" />
+    </div>
+    <div>
+        <h2>Interactive Molecule Activity View</h2>
+        <div id="mol-graph"></div>
+        <!--script>
+            Plotly.newPlot("mol-graph", /* JSON object */ {
+                "data": [{ "y": [1, 2, 3] }],
+                "layout": { "width": 600, "height": 400}
+            })
+        </script-->
+    </div>
+
+<script src="loading.js"></script>
+</body>
+</html>
