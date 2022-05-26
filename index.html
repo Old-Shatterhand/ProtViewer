@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Protein Viewer</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://cdn.plot.ly/plotly-2.12.1.min.js"></script>
 </head>
 <body>
@@ -10,16 +11,15 @@
     <div>
         <h2>Input JSON with coordinates and activities</h2>
         <input id="file" type="file" />
+		<button type="button" id="example">Show example protein</button>
+    </div>
+	<br>
+    <div id="progressBar">
+        <div id="bar"></div>
     </div>
     <div>
         <h2>Interactive Molecule Activity View</h2>
         <div id="mol-graph"></div>
-        <!--script>
-            Plotly.newPlot("mol-graph", /* JSON object */ {
-                "data": [{ "y": [1, 2, 3] }],
-                "layout": { "width": 600, "height": 400}
-            })
-        </script-->
     </div>
 
 <script src="loading.js"></script>

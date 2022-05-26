@@ -33,7 +33,6 @@ def visualize(content=None):
         y=[n['y'] for n in mol['nodes']],
         z=[n['z'] for n in mol['nodes']],
         mode='markers',
-        name='actors',
         marker={
             'symbol': 'circle',
             'size': 20,
@@ -61,7 +60,7 @@ def visualize(content=None):
     )
     axis = {
         'showbackground': False,
-        'zeroline': False,
+        'zeroline': False,'
         'showgrid': False,
         'showticklabels': False,
         'showspikes': False,
