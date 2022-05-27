@@ -1,0 +1,6 @@
+build
+dist
+misc
+ProtViewer.egg-info
+
+test.py
