@@ -1,6 +1,6 @@
-build
-dist
-misc
-ProtViewer.egg-info
+/build/*
+/dist/
+/misc/
+/ProtViewer.egg-info/
 
 test.py

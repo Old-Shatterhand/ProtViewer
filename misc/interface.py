@@ -60,7 +60,7 @@ def visualize(content=None):
     )
     axis = {
         'showbackground': False,
-        'zeroline': False,'
+        'zeroline': False,
         'showgrid': False,
         'showticklabels': False,
         'showspikes': False,
