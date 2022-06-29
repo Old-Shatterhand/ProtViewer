@@ -26,8 +26,16 @@ function visualize(mol) {
 	bar.innerHTML = 33 + "% - loading amino acids";
 
 	var colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [];
+	var act_min = 0, act_max = 0, dist_min = 0, dist_max = 0;
 	mol.nodes.forEach(function (item, index, array) {
-		colors.push("rgb(" + 255 * item.activity + ",0,0)");
+		act_min = Math.min(item.activity, act_min);
+		act_max = Math.max(item.activity, act_max);
+		dist_min = Math.min(item.distance, dist_min);
+		dist_max = Math.max(item.distance, dist_max);
+	});
+	var act_diff = act_max - act_min, dist_diff = dist_max - dist_min;
+	mol.nodes.forEach(function (item, index, array) {
+		colors.push("rgb(" + 255 * (item.activity - act_min) / act_diff + "," + 255 * (item.distance - dist_min) / dist_diff + ",0)");
 		x_pos.push(item.x);
 		y_pos.push(item.y);
 		z_pos.push(item.z);

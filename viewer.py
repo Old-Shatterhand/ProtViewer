@@ -64,7 +64,7 @@ class PDBStructure:
                  i < j and dist(coords[i], coords[j]) < threshold]
         return list(zip(*edges))
 
-    def store_graph(self, output_file: str, activities: List[int], threshold: float):
+    def store_graph(self, output_file: str, activities: List[float], distances: List[float], threshold: float):
         """
 
         :param output_file:
@@ -82,6 +82,7 @@ class PDBStructure:
                 "y": positions[i][1],
                 "z": positions[i][2],
                 "activity": activities[i],
+                "distance": distances[i],
             } for i in range(len(self.residues))],
             "edges": {
                 "start": edges[0],
@@ -91,7 +92,13 @@ class PDBStructure:
         json.dump(output, open(output_file, "w"))
 
 
-def view(pdb_file: str, output_dir: str, activities: List[float], threshold: float = 4.0) -> None:
+def view(
+        pdb_file: str,
+        output_dir: str,
+        activities: List[float],
+        distances: List[float],
+        threshold: float = 4.0
+    ) -> None:
     """
     Generate the json output file storing the protein structure and the activities per residue to be displayed in the
     web interface.
@@ -100,6 +107,8 @@ def view(pdb_file: str, output_dir: str, activities: List[float], threshold: flo
     :param output_dir: Output directory to store the json file in
     :param activities: List of the activities from a model. This should have as many entries as the PDB file contains
         residues.
+    :param distances: List of the distances between each residue and a ligand in the binding pocket. This should have
+        as many entries as the PDB file contains residues.
     :param threshold:
 
     :return: Nothing
@@ -114,4 +123,5 @@ def view(pdb_file: str, output_dir: str, activities: List[float], threshold: flo
     if len(struct) != len(activities):
         raise ValueError("PDB-File has more residues then the activity-list entries!")
 
-    struct.store_graph(os.path.join(output_dir, os.path.splitext(os.path.basename(pdb_file))[0] + ".json"), activities, threshold)
+    struct.store_graph(os.path.join(output_dir, os.path.splitext(os.path.basename(pdb_file))[0] + ".json"),
+                       activities, distances, threshold)

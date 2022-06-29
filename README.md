@@ -32,7 +32,7 @@ To use the package and generate the activities for a certain protein, just call
 ``````python
 from viewer import view
 
-view(pdb_file, output_dir, activities)
+view(pdb_file, output_dir, activities, distances)
 ``````
 This will generate the json-file inside the `output_dir` as `[pdb_file].json`. You can then directly upload this
 output file to the [web service](old-shatterhand.github.io/ProtViewer) and investigate what your model guided to the 
@@ -47,7 +47,8 @@ The json-file you input to the [online-viewer](old-shatterhand.github.io/ProtVie
       "x": ...,
       "y": ...,
       "z": ...,
-      "activity": ..., // in [0, 1]
+      "activity": ...,
+      "distance": ...,
     }, ...
   ],
   "edges": {
