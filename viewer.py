@@ -81,8 +81,8 @@ class PDBStructure:
                 "x": positions[i][0],
                 "y": positions[i][1],
                 "z": positions[i][2],
-                "activity": activities[i],
-                "distance": distances[i],
+                "activity": str(activities[i]),
+                "distance": str(distances[i]),
             } for i in range(len(self.residues))],
             "edges": {
                 "start": edges[0],

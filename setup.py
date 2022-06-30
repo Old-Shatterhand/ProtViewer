@@ -6,7 +6,7 @@ long_desc = (this_dir / 'README.md').read_text()
 
 setup(
     name='ProtViewer',
-    version='0.0.3',
+    version='0.0.6',
     description='A web-based tool to visualize activities in proteins',
     long_description=long_desc,
     long_description_content_type='text/markdown',
@@ -32,4 +32,5 @@ setup(
     url='https://github.com/Old-Shatterhand/ProtViewer',
     platforms='any',
     python_requires='>=3.0',
+	py_modules=['viewer'],
 )

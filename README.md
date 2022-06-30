@@ -13,7 +13,7 @@ target or not.
 
 ## Generating Activity Files
 
-You can easily generate the input files for the online viewer yourself be following the structure described [here](#Activity File Structure).
+You can easily generate the input files for the online viewer yourself be following the structure described in the "Activity File Structure" section below.
 
 ### Package Installation
 

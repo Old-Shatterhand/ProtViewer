@@ -28,6 +28,8 @@ function visualize(mol) {
 	var colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [];
 	var act_min = 0, act_max = 0, dist_min = 0, dist_max = 0;
 	mol.nodes.forEach(function (item, index, array) {
+		item.activity = parseFloat(item.activity);
+		item.activity = parseFloat(item.activity);
 		act_min = Math.min(item.activity, act_min);
 		act_max = Math.max(item.activity, act_max);
 		dist_min = Math.min(item.distance, dist_min);
