@@ -3,6 +3,15 @@
     text-align: center;
 }
 
+.side {
+     background-color: aqua;
+ }
+
+.aParent div {
+    float: left;
+    clear: none;
+}
+
 #progressBar {
     width: 100%;
     background-color: grey;

@@ -21,9 +21,26 @@
     </div>
     <div>
         <h2 class="title">Interactive Molecule Activity View</h2>
-        <div id="mol-graph"></div>
-    </div>
+        <div class="aParent">
+            <div id="mol-graph"></div>
+            <div>
+                <img src="explanation.png" width="618" height="600"/>
+                <fieldset>
+                    <legend>Enable and disable distance and activity visualization:</legend>
 
+                    <div>
+                        <input type="checkbox" id="activity_check" name="activity_check" checked>
+                        <label for="activity_check">Activity</label>
+                    </div>
+
+                    <div>
+                        <input type="checkbox" id="distance_check" name="distance_check" checked>
+                        <label for="distance_check">Distance</label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
 <script src="loading.js"></script>
 </body>
 </html>
