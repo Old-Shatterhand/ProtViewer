@@ -53,25 +53,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+document.getElementById("example").addEventListener("click", loadExample);
+
+document.getElementById("activity_check").addEventListener("change", changeVisualization);
+
+document.getElementById("distance_check").addEventListener("change", changeVisualization);
+
+function pearson(x, y) {
+	var meanX = 0, meanY = 0;
+	x.forEach(function (item, index, array) {
+		meanX += x[index];
+		meanY += y[index];
+	});
+	meanX /= x.length;
+	meanY /= y.length;
+
+	var cov = 0, varX = 0, varY = 0;
+	x.forEach(function (item, index, array) {
+		cov += (x[index] - meanX) * (y[index] - meanY);
+		varX += Math.pow(x[index] - meanX, 2);
+		varY += Math.pow(y[index] - meanY, 2);
+	})
+	return cov / (Math.sqrt(varX * varY));
+}
+
 function visualize(mol, acts = true, dists = true) {
 	global_mol = mol;
 	bar.style.width = 33 + "%";
 	bar.innerHTML = 33 + "% - loading amino acids";
 
-	var colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [];
+	var colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [], x = [], y = [];
 	var act_min = 0, act_max = 0, dist_min = 0, dist_max = 0;
 	mol.nodes.forEach(function (item, index, array) {
 		item.activity = parseFloat(item.activity);
-		item.activity = parseFloat(item.activity);
+		item.distance = parseFloat(item.distance);
+		x.push(item.activity);
+		y.push(item.distance);
 		act_min = Math.min(item.activity, act_min);
 		act_max = Math.max(item.activity, act_max);
 		dist_min = Math.min(item.distance, dist_min);
 		dist_max = Math.max(item.distance, dist_max);
 	});
+	document.getElementById("correlation").innerHTML = "The Pearson correlation coefficient is: " + Math.round(pearson(x, y) * 100) / 100.0
 	var act_diff = act_max - act_min, dist_diff = dist_max - dist_min;
 	mol.nodes.forEach(function (item, index, array) {
 		const act_val = acts ? 255 * (item.activity - act_min) / act_diff : 0;
-		const dist_val = dists ? 255 * (item.activity - act_min) / dist_diff : 0;
+		const dist_val = dists ? 255 * (item.distance - act_min) / dist_diff : 0;
 		colors.push("rgb(" + act_val + "," + dist_val + ",0)");
 		x_pos.push(item.x);
 		y_pos.push(item.y);
@@ -184,9 +211,4 @@ function changeVisualization(){
 	visualize(global_mol, document.getElementById("activity_check").checked, document.getElementById("distance_check").checked);
 }
 
-document.getElementById("example").addEventListener("click", loadExample);
-
-document.getElementById("activity_check").addEventListener("change", changeVisualization);
-
-document.getElementById("distance_check").addEventListener("change", changeVisualization);
 
