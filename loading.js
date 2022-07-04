@@ -73,7 +73,7 @@ function pearson(x, y) {
 		cov += (x[index] - meanX) * (y[index] - meanY);
 		varX += Math.pow(x[index] - meanX, 2);
 		varY += Math.pow(y[index] - meanY, 2);
-	})
+	});
 	return cov / (Math.sqrt(varX * varY));
 }
 
@@ -87,24 +87,28 @@ function visualize(mol, acts = true, dists = true) {
 	mol.nodes.forEach(function (item, index, array) {
 		item.activity = parseFloat(item.activity);
 		item.distance = parseFloat(item.distance);
-		x.push(item.activity);
-		y.push(item.distance);
 		act_min = Math.min(item.activity, act_min);
 		act_max = Math.max(item.activity, act_max);
 		dist_min = Math.min(item.distance, dist_min);
 		dist_max = Math.max(item.distance, dist_max);
 	});
-	document.getElementById("correlation").innerHTML = "The Pearson correlation coefficient is: " + Math.round(pearson(x, y) * 100) / 100.0
 	var act_diff = act_max - act_min, dist_diff = dist_max - dist_min;
 	mol.nodes.forEach(function (item, index, array) {
-		const act_val = acts ? 255 * (item.activity - act_min) / act_diff : 0;
-		const dist_val = dists ? 255 * (item.distance - act_min) / dist_diff : 0;
-		colors.push("rgb(" + act_val + "," + dist_val + ",0)");
+		const act_val = acts ? (item.activity - act_min) / act_diff : 0;
+		const dist_val = dists ? (item.distance - act_min) / dist_diff : 0;
+		x.push(act_val);
+		y.push(dist_val);
+		colors.push("rgb(" + 255 * act_val + "," + 255 * dist_val + ",0)");
 		x_pos.push(item.x);
 		y_pos.push(item.y);
 		z_pos.push(item.z);
-		names.push(item.name);
+		names.push(
+			"Name: " + item.name +  // .slice(-3) +
+			(acts ? "<br>Act: " + act_val.toFixed(3) : "") +
+			(dists ? "<br>Dist: " + dist_val.toFixed(3) : "")
+		);
 	});
+	document.getElementById("correlation").innerHTML = "The Pearson correlation coefficient is: " + Math.round(pearson(x, y) * 100) / 100.0;
 
 	bar.style.width = 67 + "%";
 	bar.innerHTML = 67 + "% - loading bonds";
