@@ -23,23 +23,23 @@ const layout = {
 	annotations: [],
 };
 
-var global_mol = null;
+let global_mol = null;
 
 (function(){
 
     function onChange(event) {
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = onReaderLoad;
         reader.readAsText(event.target.files[0]);
     }
 
     function onReaderLoad(event){
-        var bar = document.getElementById("bar");
+        let bar = document.getElementById("bar");
 
         bar.style.width = 0 + "%";
         bar.innerHTML = 0 + "% - loading json";
 
-        var mol = JSON.parse(event.target.result);
+        let mol = JSON.parse(event.target.result);
 
         visualize(mol);
     }
@@ -60,16 +60,16 @@ document.getElementById("activity_check").addEventListener("change", changeVisua
 document.getElementById("distance_check").addEventListener("change", changeVisualization);
 
 function pearson(x, y) {
-	var meanX = 0, meanY = 0;
-	x.forEach(function (item, index, array) {
+	let meanX = 0, meanY = 0;
+	x.forEach(function (item, index) {
 		meanX += x[index];
 		meanY += y[index];
 	});
 	meanX /= x.length;
 	meanY /= y.length;
 
-	var cov = 0, varX = 0, varY = 0;
-	x.forEach(function (item, index, array) {
+	let cov = 0, varX = 0, varY = 0;
+	x.forEach(function (item, index) {
 		cov += (x[index] - meanX) * (y[index] - meanY);
 		varX += Math.pow(x[index] - meanX, 2);
 		varY += Math.pow(y[index] - meanY, 2);
@@ -82,9 +82,9 @@ function visualize(mol, acts = true, dists = true) {
 	bar.style.width = 33 + "%";
 	bar.innerHTML = 33 + "% - loading amino acids";
 
-	var colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [], x = [], y = [];
-	var act_min = 0, act_max = 0, dist_min = 0, dist_max = 0;
-	mol.nodes.forEach(function (item, index, array) {
+	let colors = [], x_pos = [], y_pos = [], z_pos = [], names = [], x_edge = [], y_edge = [], z_edge = [], x = [], y = [];
+	let act_min = 0, act_max = 0, dist_min = 0, dist_max = 0;
+	mol.nodes.forEach(function (item) {
 		item.activity = parseFloat(item.activity);
 		item.distance = parseFloat(item.distance);
 		act_min = Math.min(item.activity, act_min);
@@ -92,8 +92,8 @@ function visualize(mol, acts = true, dists = true) {
 		dist_min = Math.min(item.distance, dist_min);
 		dist_max = Math.max(item.distance, dist_max);
 	});
-	var act_diff = act_max - act_min, dist_diff = dist_max - dist_min;
-	mol.nodes.forEach(function (item, index, array) {
+	let act_diff = act_max - act_min, dist_diff = dist_max - dist_min;
+	mol.nodes.forEach(function (item) {
 		const act_val = acts ? (item.activity - act_min) / act_diff : 0;
 		const dist_val = dists ? (item.distance - act_min) / dist_diff : 0;
 		x.push(act_val);
@@ -108,12 +108,12 @@ function visualize(mol, acts = true, dists = true) {
 			(dists ? "<br>Dist: " + dist_val.toFixed(3) : "")
 		);
 	});
-	document.getElementById("correlation").innerHTML = "The Pearson correlation coefficient is: " + Math.round(pearson(x, y) * 100) / 100.0;
+	document.getElementById("correlation").innerHTML = "The Pearson correlation coefficient is: " + Math.round(pearson(x, y) * 10000) / 10000.0;
 
 	bar.style.width = 67 + "%";
 	bar.innerHTML = 67 + "% - loading bonds";
 
-	mol.edges.start.forEach(function (item, index, array) {
+	mol.edges.start.forEach(function (item, index) {
 		if (mol.edges.start[index] < mol.edges.end[index]) {
 			x_edge.push(mol.nodes[mol.edges.start[index]].x);
 			x_edge.push(mol.nodes[mol.edges.end[index]].x);
@@ -124,7 +124,7 @@ function visualize(mol, acts = true, dists = true) {
 		}
 	});
 
-	var acids = {
+	let acids = {
 		x: x_pos,
 		y: y_pos,
 		z: z_pos,
@@ -139,7 +139,7 @@ function visualize(mol, acts = true, dists = true) {
 		hoverinfo: 'text',
 	};
 
-	var edges = {
+	let edges = {
 		x: x_edge,
 		y: y_edge,
 		z: z_edge,
@@ -154,12 +154,12 @@ function visualize(mol, acts = true, dists = true) {
 
 	Plotly.newPlot("mol-graph", [edges, acids], layout);
 
-	bar.innerHTML = 100 + "% - finished";
-	bar.style.width = 100 + "%";
+	document.getElementById("bar").innerHTML = 100 + "% - finished";
+	document.getElementById("bar").style.width = 100 + "%";
 }
 
 function loadExample() {
-	var mol = JSON.parse('{' +
+	const mol = JSON.parse('{' +
 		'"nodes": [' +
 		'{"name": "0_THR", "x": 4.261000156402588, "y": -12.79699993133545, "z": 17.017000198364258, "activity": 0, "distance": 46}, ' +
 		'{"name": "1_THR", "x": 5.7729997634887695, "y": -11.152999877929688, "z": 13.920999526977539, "activity": 1, "distance": 45}, ' +
